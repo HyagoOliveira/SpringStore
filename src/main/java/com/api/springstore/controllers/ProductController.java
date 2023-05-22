@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("products")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProductController {
     private final ProductService service;

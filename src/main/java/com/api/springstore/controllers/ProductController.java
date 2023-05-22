@@ -4,6 +4,8 @@ import com.api.springstore.dtos.ProductDto;
 import com.api.springstore.models.Product;
 import com.api.springstore.services.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,11 @@ public class ProductController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Product> findById(@PathVariable UUID id){
         return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Product>> list(Pageable pageable){
+        return ResponseEntity.ok(service.list(pageable));
     }
 
     @PostMapping

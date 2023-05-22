@@ -1,9 +1,13 @@
 package com.api.springstore.controllers;
 
+import com.api.springstore.dtos.ProductDto;
+import com.api.springstore.models.Product;
 import com.api.springstore.services.ProductService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
 @RequestMapping("/product")
@@ -13,5 +17,10 @@ public class ProductController {
 
     public ProductController(ProductService service) {
         this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<Product> save(@RequestBody @Valid ProductDto dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 }

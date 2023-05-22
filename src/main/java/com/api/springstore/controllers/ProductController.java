@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +31,11 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<Page<Product>> list(Pageable pageable){
         return ResponseEntity.ok(service.list(pageable));
+    }
+
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Product>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(service.findByName(name));
     }
 
     @PostMapping

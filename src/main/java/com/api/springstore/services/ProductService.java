@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,6 +29,10 @@ public class ProductService {
 
     public Page<Product> list(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    public List<Product> findByName(String name) {
+        return repository.findByNameContaining(name);
     }
 
     @Transactional

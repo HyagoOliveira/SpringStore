@@ -7,7 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("products")
@@ -17,6 +18,11 @@ public class ProductController {
 
     public ProductController(ProductService service) {
         this.service = service;
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Product> findById(@PathVariable UUID id){
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping

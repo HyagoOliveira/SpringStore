@@ -7,6 +7,8 @@ import com.api.springstore.services.utils.LocalDateTimeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 public class ProductService {
     private final ProductRepository repository;
@@ -15,6 +17,11 @@ public class ProductService {
     public ProductService(ProductRepository repository, LocalDateTimeService localDateTime) {
         this.repository = repository;
         this.localDateTime = localDateTime;
+    }
+
+    public Product findById(UUID id) {
+        return repository.findById(id)
+                .orElseThrow();
     }
 
     @Transactional

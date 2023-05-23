@@ -1,6 +1,7 @@
 package com.api.springstore.services;
 
 import com.api.springstore.dtos.ProductDto;
+import com.api.springstore.exceptions.BadRequestException;
 import com.api.springstore.models.Product;
 import com.api.springstore.repositories.ProductRepository;
 import com.api.springstore.services.utils.LocalDateTimeService;
@@ -24,7 +25,7 @@ public class ProductService {
 
     public Product findById(UUID id) {
         return repository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new BadRequestException("Product not found"));
     }
 
     public Page<Product> list(Pageable pageable) {

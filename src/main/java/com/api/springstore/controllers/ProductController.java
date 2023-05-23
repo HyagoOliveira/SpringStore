@@ -50,4 +50,10 @@ public class ProductController {
     ){
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remove(@PathVariable UUID id){
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -53,4 +53,9 @@ public class ProductService {
 
         return repository.save(product);
     }
+
+    public void delete(UUID id) {
+        var product = findById(id);
+        repository.delete(product);
+    }
 }

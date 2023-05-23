@@ -42,4 +42,15 @@ public class ProductService {
 
         return repository.save(product);
     }
+
+    public Product update(UUID id, ProductDto dto) {
+        var product = findById(id);
+
+        product.setName(dto.getName());
+        product.setPrice(dto.getPrice());
+        product.setPictureUrl(dto.getPictureUrl());
+        product.setDescription(dto.getDescription());
+
+        return repository.save(product);
+    }
 }

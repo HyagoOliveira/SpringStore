@@ -42,4 +42,12 @@ public class ProductController {
     public ResponseEntity<Product> save(@RequestBody @Valid ProductDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> update(
+            @PathVariable UUID id,
+            @RequestBody @Valid ProductDto dto
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, dto));
+    }
 }

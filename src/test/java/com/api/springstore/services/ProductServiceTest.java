@@ -48,13 +48,14 @@ public class ProductServiceTest {
 
     @Test
     void findById_ThrowsBadRequestException_WhenIdIsNotFound() {
+        var invalidId = UUID.randomUUID();
         BDDMockito.
-                when(repository.findById(ArgumentMatchers.any(UUID.class))).
+                when(repository.findById(invalidId)).
                 thenReturn(Optional.empty());
 
         Assertions
                 .assertThatExceptionOfType(BadRequestException.class)
-                .isThrownBy(() -> service.findById(UUID.randomUUID()));
+                .isThrownBy(() -> service.findById(invalidId));
     }
 
     @Test

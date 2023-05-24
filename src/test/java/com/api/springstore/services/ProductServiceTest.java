@@ -26,7 +26,7 @@ import java.util.UUID;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(SpringExtension.class)
-class ProductServiceTest {
+public class ProductServiceTest {
     @InjectMocks
     private ProductService service;
     @Mock
@@ -36,7 +36,7 @@ class ProductServiceTest {
 
     @Test
     void findById_ReturnsProduct() {
-        var expected = getTestProduct();
+        var expected = getProduct();
         BDDMockito.
                 when(repository.findById(expected.getId())).
                 thenReturn(Optional.of(expected));
@@ -59,7 +59,7 @@ class ProductServiceTest {
 
     @Test
     void list_ReturnsProductList() {
-        var expected = getTestProduct();
+        var expected = getProduct();
         BDDMockito.
                 when(repository.findAll(ArgumentMatchers.any(Pageable.class))).
                 thenReturn(new PageImpl<>(List.of(expected)));
@@ -87,7 +87,7 @@ class ProductServiceTest {
 
     @Test
     void findByName_ReturnsProductList() {
-        var expected = getTestProduct();
+        var expected = getProduct();
         BDDMockito.
                 when(repository.findByNameContaining(expected.getName())).
                 thenReturn(List.of(expected));
@@ -112,7 +112,7 @@ class ProductServiceTest {
 
     @Test
     void save_ReturnsProduct() {
-        var expected = getTestProduct();
+        var expected = getProduct();
         var dto = ProductDto.fromProduct(expected);
         BDDMockito.
                 when(repository.save(ArgumentMatchers.any(Product.class))).
@@ -125,7 +125,7 @@ class ProductServiceTest {
 
     @Test
     void save_UsesCurrentDateTimeFromUTCZone_AsRegistration() {
-        var expected = getTestProduct();
+        var expected = getProduct();
         var expectedRegistration = LocalDateTime.now();
         var dto = ProductDto.fromProduct(expected);
         BDDMockito.
@@ -142,7 +142,7 @@ class ProductServiceTest {
 
     @Test
     void update_ReturnsProduct() {
-        var expected = getTestProduct();
+        var expected = getProduct();
         var expectedId = UUID.randomUUID();
         var dto = ProductDto.fromProduct(expected);
         BDDMockito.
@@ -159,7 +159,7 @@ class ProductServiceTest {
 
     @Test
     void update_ThrowsBadRequestException_WhenIdIsNotFound() {
-        var expected = getTestProduct();
+        var expected = getProduct();
         var invalidId = UUID.randomUUID();
         var dto = ProductDto.fromProduct(expected);
         BDDMockito.
@@ -183,7 +183,7 @@ class ProductServiceTest {
                 .isThrownBy(() -> service.delete(invalidId));
     }
 
-    private Product getTestProduct() {
+    public static Product getProduct() {
         return Product.builder()
                 .id(UUID.randomUUID())
                 .name("Test Product")

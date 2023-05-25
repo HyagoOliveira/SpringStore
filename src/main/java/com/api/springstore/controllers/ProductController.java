@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,8 +41,12 @@ public class ProductController {
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<List<Product>> findByName(@RequestParam String name) {
-        return ResponseEntity.ok(service.findByName(name));
+    public ResponseEntity<CollectionModel<EntityModel<Product>>> findByName(
+            @RequestParam String name
+    ) {
+        var products = service.findByName(name);
+        var modelList = assembler.toModelListByName(products, name);
+        return ResponseEntity.ok(modelList);
     }
 
     @PostMapping

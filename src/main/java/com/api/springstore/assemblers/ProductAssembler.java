@@ -9,6 +9,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -35,6 +36,20 @@ public class ProductAssembler implements RepresentationModelAssembler<Product, E
         return CollectionModel.of(
                 products,
                 linkTo(methodOn(ProductController.class).list(pageable)).withSelfRel()
+        );
+    }
+
+    public CollectionModel<EntityModel<Product>> toModelListByName(
+            List<Product> productList,
+            String name
+    ) {
+        var products = productList.stream()
+                .map(this::toModel)
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(
+                products,
+                linkTo(methodOn(ProductController.class).findByName(name)).withSelfRel()
         );
     }
 }

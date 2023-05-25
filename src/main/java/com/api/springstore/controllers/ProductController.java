@@ -28,15 +28,17 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{id}")
-    public EntityModel<Product> findById(@PathVariable UUID id) {
+    public ResponseEntity<EntityModel<Product>> findById(@PathVariable UUID id) {
         var product = service.findById(id);
-        return assembler.toModel(product);
+        var model = assembler.toModel(product);
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping
-    public CollectionModel<EntityModel<Product>> list(Pageable pageable) {
+    public ResponseEntity<CollectionModel<EntityModel<Product>>> list(Pageable pageable) {
         var products = service.list(pageable);
-        return assembler.toModelList(products, pageable);
+        var modelList = assembler.toModelList(products, pageable);
+        return ResponseEntity.ok(modelList);
     }
 
     @GetMapping(path = "/find")

@@ -21,7 +21,7 @@ public class ProductPreloader {
     private static final Logger log = LoggerFactory.getLogger(ProductPreloader.class);
 
     @Bean
-    CommandLineRunner initDatabase(ProductRepository repository, ProductService service) {
+    public CommandLineRunner initializeProducts(ProductRepository repository, ProductService service) {
         return args -> {
             var hasProducts = repository.count() > 0;
             if (hasProducts) return;

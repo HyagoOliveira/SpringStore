@@ -1,10 +1,6 @@
 package com.api.springstore.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,16 +21,20 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @NotEmpty
     private String name;
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
     private String authorities;
     private boolean enabled;
 
-    public final String AUTH_SPLIT = ",";
+    public final static String AUTH_SPLIT = ",";
+
+    public final static String ADMIN = "ROLE_ADMIN";
+    public final static String USER = "ROLE_USER";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
